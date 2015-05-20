@@ -86,6 +86,7 @@
     <Compile Include="ViewController.designer.cs">
       <DependentUpon>ViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConferenceAnnotation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -93,5 +94,12 @@
       <Project>{A20E826E-0D6E-4BAC-A4AD-8FFCCE72B0E6}</Project>
       <Name>REMarkerClustererBinding</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\Pin_Purple%402x.png" />
+    <BundleResource Include="Images\Pin_Red.png" />
   </ItemGroup>
 </Project>
