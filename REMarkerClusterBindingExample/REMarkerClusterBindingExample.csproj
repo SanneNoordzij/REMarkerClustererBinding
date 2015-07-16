@@ -99,7 +99,7 @@
     <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Images\Pin_Purple%402x.png" />
     <BundleResource Include="Images\Pin_Red.png" />
+    <BundleResource Include="Images\Pin_Purple.png" />
   </ItemGroup>
 </Project>

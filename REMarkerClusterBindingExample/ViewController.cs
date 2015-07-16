@@ -6,6 +6,7 @@ using REMarkerClustererBinding;
 using Foundation;
 using MapDemo;
 using System.Drawing;
+using ObjCRuntime;
 
 namespace REMarkerClusterBindingExample
 {
@@ -40,7 +41,7 @@ namespace REMarkerClusterBindingExample
 			cluster.GridSize = 20;
 			cluster.ClusterTitle = "Title";
 			AddClusterItems ();
-			cluster.Clusterize (false);
+			cluster.Clusterize (true);
 			cluster.ZoomToAnnotationsBounds (cluster.Markers);
 			mapDelegate = new MapDelegate ();
 			mapView.Delegate = mapDelegate;
@@ -77,6 +78,8 @@ namespace REMarkerClusterBindingExample
 		{
 			string defaultPinID = "REDefaultPin";
 			string markerPinID = "REMarkerPin";
+			string clusterPinID = "REClusterPin";
+
 			public override MKAnnotationView GetViewForAnnotation (MKMapView mapView, IMKAnnotation annotation)
 			{
 				if(ThisIsTheCurrentLocation(mapView, annotation))
@@ -84,21 +87,24 @@ namespace REMarkerClusterBindingExample
 					return null;
 				}
 				string pinID;
-				
+
+				var customAnnotation = Runtime.GetNSObject(annotation.Handle) as RECluster;
+
 				if(ViewController.segment.SelectedSegment == 0){
 					pinID = defaultPinID;
 				}else{
-					pinID = markerPinID;
+					pinID = (customAnnotation.Markers.Count == 1) ? markerPinID : clusterPinID;
 				}
+
 				MKPinAnnotationView annotationView = (MKPinAnnotationView)mapView.DequeueReusableAnnotation (pinID);
 
 				if(annotationView == null){
 					annotationView = new MKPinAnnotationView (annotation, pinID);
 					annotationView.CanShowCallout = true;
-
-					if(segment.SelectedSegment == 1){
-						annotationView.Image = UIImage.FromBundle ("Images/Pin_Red");
-					}
+				}
+				if(segment.SelectedSegment == 1){	
+					string imageName = (customAnnotation.Markers.Count == 1) ? "Images/Pin_Red" : "Images/Pin_Purple";
+					annotationView.Image = UIImage.FromBundle (imageName);
 				}
 				return annotationView;
 			}
